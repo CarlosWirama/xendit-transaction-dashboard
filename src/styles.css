@@ -1,4 +1,24 @@
-.App {
+body {
   font-family: sans-serif;
-  text-align: center;
+  margin: 0;
+  height: 100vh;
+}
+
+#root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --lightgray: #e5e5e5;
+  --gray: #dfdfdf;
+  height: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .lg-show {
+    display: none;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .lg-hide {
+    display: none;
+  }
 }

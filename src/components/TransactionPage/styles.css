@@ -1,0 +1,22 @@
+.page-container {
+  height: 100%;
+  background: var(--lightgray);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-container {
+  padding: 8px;
+  display: flex;
+}
+
+@media only screen and (min-width: 768px) {
+  .page-container {
+    padding: 16px;
+  }
+
+  .summary-container {
+    padding: 0;
+  }
+}
