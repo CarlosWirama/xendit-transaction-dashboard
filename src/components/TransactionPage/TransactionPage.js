@@ -68,7 +68,11 @@ export default function TransactionPage() {
           </div>
           <div className="summary-footer">
             <div>Transactions Number</div>
-            <div className="count">{summary.incoming.count}</div>
+            {isSummaryLoading || !summary ? (
+              <CircularProgress />
+            ) : (
+              <div className="count">{summary.incoming.count}</div>
+            )}
           </div>
         </Card>
         <Card className="summary-card">
@@ -88,7 +92,11 @@ export default function TransactionPage() {
           </div>
           <div className="summary-footer">
             <div>Transactions Number</div>
-            <div className="count">{summary.outgoing.count}</div>
+            {isSummaryLoading || !summary ? (
+              <CircularProgress />
+            ) : (
+              <div className="count">{summary.outgoing.count}</div>
+            )}
           </div>
         </Card>
       </div>
