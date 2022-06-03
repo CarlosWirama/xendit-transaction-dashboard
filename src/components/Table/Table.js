@@ -8,6 +8,8 @@ import { subMonths } from "date-fns";
 import Card from "../Card";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import TableMUI from "./TableMUI";
+import { formatColumns } from "./utils";
 import "./styles.css";
 
 export default function Table({
@@ -19,6 +21,7 @@ export default function Table({
 }) {
   const [startDate, setStartDate] = useState(subMonths(new Date(), 1));
   const [endDate, setEndDate] = useState(new Date());
+  const formattedColumns = formatColumns(columns);
   return (
     <Card className={`table-container ${className}`} {...props}>
       <div className="filter-bar">
@@ -47,7 +50,7 @@ export default function Table({
           Export
         </Button>
       </div>
-      <table></table>
+      <TableMUI rows={data} rowPrimaryKey="id" columns={formattedColumns} />
     </Card>
   );
 }

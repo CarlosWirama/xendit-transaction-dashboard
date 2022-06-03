@@ -7,12 +7,12 @@ import { getTransactions } from "../../apis/transaction";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 export default function TransactionPage() {
-  const [transactions, setTransactions] = useState();
+  const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    getTransactions().then(({ data }) => {
+    getTransactions().then(({ data, links, has_more: hasMore }) => {
       setIsLoading(false);
       setTransactions(data);
     });
