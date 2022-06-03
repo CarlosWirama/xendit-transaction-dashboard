@@ -9,13 +9,23 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 export default function TransactionPage() {
   const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
+  async function loadTransactions() {
     setIsLoading(true);
-    getTransactions().then(({ data, links, has_more: hasMore }) => {
-      setIsLoading(false);
+    try {
+      const { data } = await getTransactions();
       setTransactions(data);
-    });
+      setError("");
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  useEffect(() => {
+    loadTransactions();
   }, []);
 
   return (
@@ -29,6 +39,8 @@ export default function TransactionPage() {
         data={transactions}
         isLoading={isLoading}
         columns={columns}
+        onReload={loadTransactions}
+        error={error}
       />
     </div>
   );

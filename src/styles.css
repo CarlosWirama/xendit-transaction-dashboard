@@ -9,6 +9,9 @@ body {
   --white: #ffffff;
   --lightgray: #e5e5e5;
   --gray: #dfdfdf;
+  --green: #00ba8a;
+  --red: #e84855;
+  --yellow: #ffe59d;
   height: 100%;
 }
 
@@ -21,4 +24,28 @@ body {
   .lg-hide {
     display: none;
   }
+}
+
+.green {
+  color: var(--green);
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.bg-yellow {
+  background-color: var(--yellow);
 }

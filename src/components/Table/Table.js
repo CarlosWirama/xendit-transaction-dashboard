@@ -16,6 +16,8 @@ export default function Table({
   isLoading,
   data,
   columns,
+  onReload,
+  error,
   className = "",
   ...props
 }) {
@@ -50,7 +52,14 @@ export default function Table({
           Export
         </Button>
       </div>
-      <TableMUI rows={data} rowPrimaryKey="id" columns={formattedColumns} />
+      <TableMUI
+        rows={data}
+        rowPrimaryKey="id"
+        columns={formattedColumns}
+        isLoading={isLoading}
+        onReload={onReload}
+        error={error}
+      />
     </Card>
   );
 }

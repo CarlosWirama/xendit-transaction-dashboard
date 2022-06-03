@@ -8,8 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
+import CircularProgress from "@mui/material/CircularProgress";
 import { visuallyHidden } from "@mui/utils";
 import { stableSort, getComparator, Order } from "./sortUtil";
+import { Button } from "@mui/material";
 
 interface Data {
   calories: number;
@@ -135,11 +137,17 @@ interface EnhancedTableProps {
   rows: Array<any>;
   rowPrimaryKey: string;
   columns: Column[];
+  isLoading: boolean;
+  error: string;
+  onReload: () => void;
 }
 export default function EnhancedTable({
   rows,
   rowPrimaryKey,
-  columns
+  columns,
+  isLoading,
+  error,
+  onReload
 }: EnhancedTableProps) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<string>(rowPrimaryKey);
@@ -172,8 +180,7 @@ export default function EnhancedTable({
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = Math.max(0, (1 + page) * rowsPerPage - rows.length);
 
   return (
     <>
@@ -190,38 +197,53 @@ export default function EnhancedTable({
             onRequestSort={handleRequestSort}
             columns={columns}
           />
+
           <TableBody>
             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.slice().sort(getComparator(order, orderBy)) */}
-            {stableSort(rows, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const isItemSelected = selected === row[rowPrimaryKey];
-                return (
-                  <TableRow
-                    hover
-                    onClick={() => handleClick(row[rowPrimaryKey])}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row[rowPrimaryKey]}
-                    selected={isItemSelected}
-                  >
-                    {columns.map(({ name, render, align }) => (
-                      <TableCell
-                        align={align}
-                        key={name}
-                        className="table-data-cell"
-                      >
-                        {render ? render(row[name]) : row[name]}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                );
-              })}
+            {isLoading ? (
+              <TableCell className="loading-container" colSpan={columns.length}>
+                <CircularProgress />
+              </TableCell>
+            ) : error ? (
+              <TableCell className="loading-container" colSpan={columns.length}>
+                Something wrong happened: {error}
+                <br />
+                <Button onClick={onReload} variant="contained">
+                  Reload
+                </Button>
+              </TableCell>
+            ) : (
+              stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = selected === row[rowPrimaryKey];
+                  return (
+                    <TableRow
+                      hover
+                      onClick={() => handleClick(row[rowPrimaryKey])}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row[rowPrimaryKey]}
+                      selected={isItemSelected}
+                    >
+                      {columns.map(({ name, render, align }) => (
+                        <TableCell
+                          align={align}
+                          key={name}
+                          className="table-data-cell"
+                        >
+                          {render ? render(row[name]) : row[name]}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })
+            )}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
+                <TableCell colSpan={columns.length} />
               </TableRow>
             )}
           </TableBody>
