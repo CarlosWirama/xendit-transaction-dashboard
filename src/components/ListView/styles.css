@@ -4,27 +4,22 @@
 }
 
 .filter-bar {
-  padding: 8px;
+  border-bottom: 1px solid var(--gray);
+  padding: 16px;
   display: flex;
   align-items: center;
+}
+.filter-bar > button,
+.filter-bar > div:not(:first-child) {
+  margin-left: 16px;
+}
+.filter-bar > span,
+.filter-bar > div:nth-child(4) {
+  margin-left: 8px;
 }
 
 .search-field {
   flex: 1;
-}
-
-caption {
-  position: absolute;
-  visibility: hidden;
-}
-
-.table-header-cell {
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.table-data-cell {
-  text-transform: capitalize;
 }
 
 .loading-container {

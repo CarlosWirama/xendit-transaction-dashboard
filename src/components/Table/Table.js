@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+
+import InputAdornment from "@mui/material/InputAdornment";
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { subMonths } from "date-fns";
 
@@ -15,6 +18,7 @@ import "./styles.css";
 export default function Table({
   isLoading,
   data,
+  rowPrimaryKey,
   columns,
   onReload,
   error,
@@ -47,6 +51,14 @@ export default function Table({
         <TextField
           variant="outlined"
           placeholder="Search by phone number or external ID"
+          className="search-field"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            )
+          }}
         />
         <Button variant="contained" startIcon={<CloudDownloadOutlinedIcon />}>
           Export
@@ -54,7 +66,7 @@ export default function Table({
       </div>
       <TableMUI
         rows={data}
-        rowPrimaryKey="id"
+        rowPrimaryKey={rowPrimaryKey}
         columns={formattedColumns}
         isLoading={isLoading}
         onReload={onReload}

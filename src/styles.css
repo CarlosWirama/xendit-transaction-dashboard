@@ -26,6 +26,9 @@ body {
   }
 }
 
+.black {
+  color: var(--black);
+}
 .green {
   color: var(--green);
 }

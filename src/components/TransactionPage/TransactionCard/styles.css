@@ -1,0 +1,23 @@
+.transaction-card {
+  margin: 8px;
+  padding: 12px 8px 8px;
+}
+
+.header-row {
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.amount-row {
+  font-size: 14px;
+  margin: 12px 0 4px;
+}
+
+.footer-row {
+  font-size: 12px;
+}
+
+.channel-logo {
+  display: inline-flex;
+  margin-left: 8px;
+}
