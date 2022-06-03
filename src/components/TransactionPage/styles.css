@@ -63,6 +63,7 @@
 
   .summary-card {
     flex-direction: row;
+    justify-content: space-around;
   }
   .summary-header {
     border-bottom: none;
